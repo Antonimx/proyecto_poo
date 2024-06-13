@@ -37,6 +37,7 @@ public class ContratarPlan extends javax.swing.JFrame {
         cmbPlanes = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         jPanel1.setBackground(new java.awt.Color(186, 186, 186));
 

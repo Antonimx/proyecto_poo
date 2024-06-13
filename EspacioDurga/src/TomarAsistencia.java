@@ -37,6 +37,7 @@ public class TomarAsistencia extends javax.swing.JFrame {
         lblRut2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
 
         jPanel1.setBackground(new java.awt.Color(186, 186, 186));
 

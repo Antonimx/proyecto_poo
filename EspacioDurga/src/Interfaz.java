@@ -1,18 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import java.sql.Connection;
+import java.sql.Statement;
 
-/**
- *
- * @author valen
- */
+
 public class Interfaz extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Interfaz
-     */
+    private Connection conex;
+    private Statement st;
+    private SentenciasSQL sql = new SentenciasSQL();
+    
     public Interfaz() {
+        conex = sql.conectar(conex,st);
         initComponents();
     }
 
@@ -37,7 +33,7 @@ public class Interfaz extends javax.swing.JFrame {
         cmdCerrarDia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+        setLocationByPlatform(true);
 
         jPanel1.setBackground(new java.awt.Color(186, 186, 186));
         jPanel1.setLayout(null);
@@ -97,8 +93,16 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel1.add(cmdCerrarDia);
         cmdCerrarDia.setBounds(70, 400, 100, 23);
 
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 580, 460);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -111,7 +115,7 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdAsistenciaActionPerformed
 
     private void cmdAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAgregarActionPerformed
-        NuevoAlumno N_alum = new NuevoAlumno();
+        NuevoAlumno N_alum = new NuevoAlumno(conex);
         N_alum.setVisible(true);
     }//GEN-LAST:event_cmdAgregarActionPerformed
 
