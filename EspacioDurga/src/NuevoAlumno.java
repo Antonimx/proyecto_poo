@@ -1,16 +1,20 @@
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.sql.Date;
-
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class NuevoAlumno extends javax.swing.JFrame {
     private Connection conex;
     private Statement st;
-    public NuevoAlumno(Connection conex) {
+    private SentenciasSQL sql;
+    private LocalDate fecha = LocalDate.now();
+    public NuevoAlumno(Connection conex,SentenciasSQL sql) {
         this.conex = conex;
+        this.sql = sql;
+        
         initComponents();
         cmbPlanId.setVisible(false);
         llenarCombo();
@@ -218,8 +222,12 @@ public class NuevoAlumno extends javax.swing.JFrame {
     private void cmdConfirmarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConfirmarAlumnoActionPerformed
         int plan_mensual_id = Integer.parseInt(cmbPlanId.getItemAt(cmbPlan.getSelectedIndex()));
         Date fecha_nac = new Date((dateFechaNac.getDate().getTime()));
-        Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText(),plan_mensual_id,conex);
-        a.guardar();
+        Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText(),plan_mensual_id);
+        sql.guardar(a.getInsert());
+        ContratoPlan c = new ContratoPlan(txtRut.getText(),Date.valueOf(fecha),Date.valueOf(fecha.plusDays(31)),sql.getNumClases(plan_mensual_id));
+        sql.guardar(c.getInsert());
+        this.setVisible(false);
+        
     }//GEN-LAST:event_cmdConfirmarAlumnoActionPerformed
 
     /**

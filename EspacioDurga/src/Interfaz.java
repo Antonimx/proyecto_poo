@@ -2,13 +2,15 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 
+
+
 public class Interfaz extends javax.swing.JFrame {
-    private Connection conex;
+    private final Connection conex;
     private Statement st;
-    private SentenciasSQL sql = new SentenciasSQL();
+    private final SentenciasSQL sql = new SentenciasSQL();
     
     public Interfaz() {
-        conex = sql.conectar(conex,st);
+        conex = sql.conectar();
         initComponents();
     }
 
@@ -31,6 +33,7 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         cmdSalir = new javax.swing.JButton();
         cmdCerrarDia = new javax.swing.JButton();
+        lblFecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -90,8 +93,17 @@ public class Interfaz extends javax.swing.JFrame {
         cmdSalir.setBounds(430, 400, 75, 23);
 
         cmdCerrarDia.setText("Cerrar dia");
+        cmdCerrarDia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCerrarDiaActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdCerrarDia);
-        cmdCerrarDia.setBounds(70, 400, 100, 23);
+        cmdCerrarDia.setBounds(50, 400, 100, 23);
+
+        lblFecha.setText("jLabel4");
+        jPanel1.add(lblFecha);
+        lblFecha.setBounds(410, 130, 120, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +127,7 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdAsistenciaActionPerformed
 
     private void cmdAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAgregarActionPerformed
-        NuevoAlumno N_alum = new NuevoAlumno(conex);
+        NuevoAlumno N_alum = new NuevoAlumno(conex,sql);
         N_alum.setVisible(true);
     }//GEN-LAST:event_cmdAgregarActionPerformed
 
@@ -127,6 +139,10 @@ public class Interfaz extends javax.swing.JFrame {
         ContratarPlan C_plan = new ContratarPlan();
         C_plan.setVisible(true);
     }//GEN-LAST:event_cmdContratarActionPerformed
+
+    private void cmdCerrarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCerrarDiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdCerrarDiaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,5 +190,6 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblFecha;
     // End of variables declaration//GEN-END:variables
 }
