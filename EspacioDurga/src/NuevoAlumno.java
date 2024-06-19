@@ -14,7 +14,7 @@ public class NuevoAlumno extends javax.swing.JFrame {
     public NuevoAlumno(Connection conex,SentenciasSQL sql) {
         this.conex = conex;
         this.sql = sql;
-        
+        //hola
         initComponents();
         cmbPlanId.setVisible(false);
         llenarCombo();
