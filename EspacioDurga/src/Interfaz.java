@@ -26,14 +26,12 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         cmdAsistencia = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        cmdAgregar = new javax.swing.JButton();
         cmdContratar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         cmdSalir = new javax.swing.JButton();
         cmdCerrarDia = new javax.swing.JButton();
-        lblFecha = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -48,21 +46,12 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdAsistencia);
-        cmdAsistencia.setBounds(40, 340, 130, 23);
+        cmdAsistencia.setBounds(120, 340, 130, 23);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Control de Asistencia \"Espacio Durga\"");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(60, 20, 440, 30);
-
-        cmdAgregar.setText("Agregar nuevo alumno");
-        cmdAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdAgregarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cmdAgregar);
-        cmdAgregar.setBounds(210, 340, 160, 23);
 
         cmdContratar.setText("Contratar plan");
         cmdContratar.addActionListener(new java.awt.event.ActionListener() {
@@ -71,7 +60,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdContratar);
-        cmdContratar.setBounds(410, 340, 120, 23);
+        cmdContratar.setBounds(340, 340, 120, 23);
 
         jLabel2.setText("Bienvenido al menu, a continuacion elija una opcion:");
         jPanel1.add(jLabel2);
@@ -101,10 +90,6 @@ public class Interfaz extends javax.swing.JFrame {
         jPanel1.add(cmdCerrarDia);
         cmdCerrarDia.setBounds(50, 400, 100, 23);
 
-        lblFecha.setText("jLabel4");
-        jPanel1.add(lblFecha);
-        lblFecha.setBounds(410, 130, 120, 16);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -125,11 +110,6 @@ public class Interfaz extends javax.swing.JFrame {
                 
                
     }//GEN-LAST:event_cmdAsistenciaActionPerformed
-
-    private void cmdAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAgregarActionPerformed
-        NuevoAlumno N_alum = new NuevoAlumno(conex,sql);
-        N_alum.setVisible(true);
-    }//GEN-LAST:event_cmdAgregarActionPerformed
 
     private void cmdSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalirActionPerformed
         System.exit(0);
@@ -180,7 +160,6 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdAgregar;
     private javax.swing.JButton cmdAsistencia;
     private javax.swing.JButton cmdCerrarDia;
     private javax.swing.JButton cmdContratar;
@@ -190,6 +169,5 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lblFecha;
     // End of variables declaration//GEN-END:variables
 }
