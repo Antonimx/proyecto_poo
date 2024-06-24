@@ -9,12 +9,14 @@
  */
 public class TomarAsistencia extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TomarAsistencia
-     */
-    public TomarAsistencia() {
+    SentenciasSQL sql;
+    public TomarAsistencia(SentenciasSQL sql) {
+        this.sql = sql;
         initComponents();
+        cmdTomarAsistencia.setEnabled(false); 
     }
+    
+    public TomarAsistencia(){}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,13 +30,11 @@ public class TomarAsistencia extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtFecha = new javax.swing.JTextField();
-        txtRut = new javax.swing.JTextField();
         SalirAlumno = new javax.swing.JButton();
-        lblFecha = new javax.swing.JLabel();
-        lblRut = new javax.swing.JLabel();
-        cmdTerminarAsistencia = new javax.swing.JButton();
-        lblRut2 = new javax.swing.JLabel();
+        cmdTomarAsistencia = new javax.swing.JButton();
+        txtRut = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        cmdBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -53,13 +53,27 @@ public class TomarAsistencia extends javax.swing.JFrame {
             }
         });
 
-        lblFecha.setText("Ingrese fecha:");
+        cmdTomarAsistencia.setText("Tomar Asistencia");
+        cmdTomarAsistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdTomarAsistenciaActionPerformed(evt);
+            }
+        });
 
-        lblRut.setText("Ingrese RUT alumno:");
+        txtRut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRutActionPerformed(evt);
+            }
+        });
 
-        cmdTerminarAsistencia.setText("Terminar");
+        jLabel3.setText("Ingrese rut del alumno:");
 
-        lblRut2.setText("(sin puntos ni guion)");
+        cmdBuscar.setText("Buscar");
+        cmdBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,29 +82,25 @@ public class TomarAsistencia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(113, 113, 113)
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(SalirAlumno)
+                        .addGap(114, 114, 114))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cmdTomarAsistencia)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblFecha)
-                                        .addComponent(lblRut))
-                                    .addComponent(lblRut2, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(23, 23, 23)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
-                                    .addComponent(txtRut))
-                                .addGap(43, 43, 43))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cmdTerminarAsistencia)
-                                .addGap(108, 108, 108)
-                                .addComponent(SalirAlumno)
-                                .addGap(114, 114, 114))))))
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmdBuscar)))
+                        .addContainerGap(31, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,21 +108,17 @@ public class TomarAsistencia extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(53, 53, 53)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFecha))
-                        .addGap(28, 28, 28)
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRut))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblRut2))
+                            .addComponent(jLabel3)
+                            .addComponent(cmdBuscar))
+                        .addGap(18, 18, 18)
+                        .addComponent(cmdTomarAsistencia)
+                        .addGap(66, 66, 66))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SalirAlumno)
-                    .addComponent(cmdTerminarAsistencia))
+                .addComponent(SalirAlumno)
                 .addGap(18, 18, 18))
         );
 
@@ -133,6 +139,24 @@ public class TomarAsistencia extends javax.swing.JFrame {
     private void SalirAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirAlumnoActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_SalirAlumnoActionPerformed
+
+    private void txtRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRutActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRutActionPerformed
+
+    private void cmdTomarAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdTomarAsistenciaActionPerformed
+        ContratoPlan contrato = new ContratoPlan();
+        contrato = sql.conseguirContrato(txtRut.getText().strip(),contrato);
+        contrato.tomarAsistencia();
+        sql.update(contrato.getUpdate());
+        cmdTomarAsistencia.setEnabled(false); 
+    }//GEN-LAST:event_cmdTomarAsistenciaActionPerformed
+
+    private void cmdBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBuscarActionPerformed
+        if (sql.validarRut(txtRut.getText().strip())){
+            cmdTomarAsistencia.setEnabled(true);
+        }
+    }//GEN-LAST:event_cmdBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,14 +195,12 @@ public class TomarAsistencia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SalirAlumno;
-    private javax.swing.JButton cmdTerminarAsistencia;
+    private javax.swing.JButton cmdBuscar;
+    private javax.swing.JButton cmdTomarAsistencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblFecha;
-    private javax.swing.JLabel lblRut;
-    private javax.swing.JLabel lblRut2;
-    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtRut;
     // End of variables declaration//GEN-END:variables
 }

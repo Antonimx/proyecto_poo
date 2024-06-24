@@ -1,16 +1,11 @@
-import java.sql.Connection;
-import java.sql.Statement;
-
-
-
 
 public class Interfaz extends javax.swing.JFrame {
-    private final Connection conex;
-    private Statement st;
     private final SentenciasSQL sql = new SentenciasSQL();
     
     public Interfaz() {
-        conex = sql.conectar();
+        sql.conectar();
+        sql.conseguirPlanes();
+        sql.conseguirAlumnos();
         initComponents();
     }
 
@@ -31,7 +26,8 @@ public class Interfaz extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jLabel3 = new javax.swing.JLabel();
         cmdSalir = new javax.swing.JButton();
-        cmdCerrarDia = new javax.swing.JButton();
+        cmdAgregarAlumno = new javax.swing.JButton();
+        cmdVerPlanes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -46,7 +42,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdAsistencia);
-        cmdAsistencia.setBounds(120, 340, 130, 23);
+        cmdAsistencia.setBounds(40, 350, 130, 23);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("Control de Asistencia \"Espacio Durga\"");
@@ -60,7 +56,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdContratar);
-        cmdContratar.setBounds(340, 340, 120, 23);
+        cmdContratar.setBounds(240, 350, 120, 23);
 
         jLabel2.setText("Bienvenido al menu, a continuacion elija una opcion:");
         jPanel1.add(jLabel2);
@@ -79,16 +75,20 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmdSalir);
-        cmdSalir.setBounds(430, 400, 75, 23);
+        cmdSalir.setBounds(470, 410, 75, 23);
 
-        cmdCerrarDia.setText("Cerrar dia");
-        cmdCerrarDia.addActionListener(new java.awt.event.ActionListener() {
+        cmdAgregarAlumno.setText("Agregar Alumno");
+        cmdAgregarAlumno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdCerrarDiaActionPerformed(evt);
+                cmdAgregarAlumnoActionPerformed(evt);
             }
         });
-        jPanel1.add(cmdCerrarDia);
-        cmdCerrarDia.setBounds(50, 400, 100, 23);
+        jPanel1.add(cmdAgregarAlumno);
+        cmdAgregarAlumno.setBounds(430, 350, 120, 23);
+
+        cmdVerPlanes.setText("Ver Historial de Planes contratados");
+        jPanel1.add(cmdVerPlanes);
+        cmdVerPlanes.setBounds(40, 410, 240, 23);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,7 +105,7 @@ public class Interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAsistenciaActionPerformed
-        TomarAsistencia T_asis = new TomarAsistencia();
+        TomarAsistencia T_asis = new TomarAsistencia(sql);
         T_asis.setVisible(true);
                 
                
@@ -116,13 +116,14 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdSalirActionPerformed
 
     private void cmdContratarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdContratarActionPerformed
-        ContratarPlan C_plan = new ContratarPlan();
+        ContratarPlan C_plan = new ContratarPlan(sql);
         C_plan.setVisible(true);
     }//GEN-LAST:event_cmdContratarActionPerformed
 
-    private void cmdCerrarDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCerrarDiaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmdCerrarDiaActionPerformed
+    private void cmdAgregarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAgregarAlumnoActionPerformed
+        NuevoAlumno N_alum = new NuevoAlumno(sql);
+        N_alum.setVisible(true);
+    }//GEN-LAST:event_cmdAgregarAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,10 +161,11 @@ public class Interfaz extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdAgregarAlumno;
     private javax.swing.JButton cmdAsistencia;
-    private javax.swing.JButton cmdCerrarDia;
     private javax.swing.JButton cmdContratar;
     private javax.swing.JButton cmdSalir;
+    private javax.swing.JButton cmdVerPlanes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

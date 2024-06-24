@@ -1,21 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javax.swing.*;
 
-/**
- *
- * @author valen
- */
 public class ContratarPlan extends javax.swing.JFrame {
-    /**
-     * Creates new form ContratarPlan
-     */
-    public ContratarPlan() {
-        initComponents();
-    }
-   
+    
+    private SentenciasSQL sql;
+    private LocalDate fecha = LocalDate.now();
 
+    public ContratarPlan(SentenciasSQL sql) {
+        this.sql = sql;
+        initComponents();
+        cmbIdPlanes.setVisible(false);
+        cmbRuts.setVisible(false);
+        llenarCombos();
+        llenarAlumnos();
+    }
+    public ContratarPlan(){}
+   
+    public void llenarCombos(){
+        for (String plan : sql.getListaPlanes()){
+            cmbPlanes.addItem(plan);
+        }
+        
+        for (String id : sql.getListaIdPlanes()){
+            cmbIdPlanes.addItem(id);
+        }
+    }
+    public void llenarAlumnos(){
+        for (String alumno : sql.getAlumnos()) {
+            cmbAlumnos.addItem(alumno);
+        }
+        
+        
+        for (String rut : sql.getRutAlumnos()){
+            cmbRuts.addItem(rut);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,25 +51,37 @@ public class ContratarPlan extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cmdConfirmarPlan = new javax.swing.JButton();
         cmdSalir = new javax.swing.JButton();
-        txtBuscarRut = new javax.swing.JTextField();
-        lblBuscarRut = new javax.swing.JLabel();
-        lblBuscarRut2 = new javax.swing.JLabel();
         lblElegirPlan = new javax.swing.JLabel();
         cmbPlanes = new javax.swing.JComboBox<>();
-        txtNomAlumno = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        cmbIdPlanes = new javax.swing.JComboBox<>();
+        cmbRuts = new javax.swing.JComboBox<>();
+        cmbAlumnos = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
+        setMinimumSize(new java.awt.Dimension(500, 600));
 
         jPanel1.setBackground(new java.awt.Color(186, 186, 186));
+        jPanel1.setLayout(null);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/durga.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(10, 10, 143, 200);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Contratar nuevo plan");
+        jPanel1.add(jLabel2);
+        jLabel2.setBounds(241, 6, 181, 25);
 
         cmdConfirmarPlan.setText("Confirmar");
+        cmdConfirmarPlan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdConfirmarPlanActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmdConfirmarPlan);
+        cmdConfirmarPlan.setBounds(50, 300, 84, 23);
 
         cmdSalir.setText("Salir");
         cmdSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -56,104 +89,33 @@ public class ContratarPlan extends javax.swing.JFrame {
                 cmdSalirActionPerformed(evt);
             }
         });
-
-        txtBuscarRut.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarRutActionPerformed(evt);
-            }
-        });
-
-        lblBuscarRut.setText("Ingrese rut alumno:");
-
-        lblBuscarRut2.setText("(sin puntos ni guion)");
+        jPanel1.add(cmdSalir);
+        cmdSalir.setBounds(460, 300, 72, 23);
 
         lblElegirPlan.setText("Elija el plan que desea contratar: ");
+        jPanel1.add(lblElegirPlan);
+        lblElegirPlan.setBounds(160, 100, 172, 16);
 
-        txtNomAlumno.setEnabled(false);
-        txtNomAlumno.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.add(cmbPlanes);
+        cmbPlanes.setBounds(340, 100, 149, 22);
+
+        cmbIdPlanes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomAlumnoActionPerformed(evt);
+                cmbIdPlanesActionPerformed(evt);
             }
         });
+        jPanel1.add(cmbIdPlanes);
+        cmbIdPlanes.setBounds(170, 160, 72, 22);
 
-        jButton1.setText("Agregar nuevo alumno");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jPanel1.add(cmbRuts);
+        cmbRuts.setBounds(280, 160, 72, 22);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(92, 92, 92)
-                                        .addComponent(jLabel2))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(47, 47, 47)
-                                        .addComponent(lblBuscarRut2))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(47, 47, 47)
-                                            .addComponent(lblBuscarRut)
-                                            .addGap(53, 53, 53)
-                                            .addComponent(txtBuscarRut, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(143, 143, 143)
-                                            .addComponent(cmbPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(100, 100, 100)
-                                        .addComponent(txtNomAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(cmdConfirmarPlan)
-                                .addGap(50, 50, 50)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmdSalir)))
-                        .addGap(96, 96, 96))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblElegirPlan)
-                        .addGap(143, 143, 143))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel2)
-                        .addGap(33, 33, 33)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblBuscarRut)
-                            .addComponent(txtBuscarRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblBuscarRut2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNomAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblElegirPlan)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(37, 37, 37)))
-                .addComponent(cmbPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdConfirmarPlan)
-                    .addComponent(cmdSalir)
-                    .addComponent(jButton1))
-                .addGap(31, 31, 31))
-        );
+        jPanel1.add(cmbAlumnos);
+        cmbAlumnos.setBounds(270, 60, 220, 22);
+
+        jLabel3.setText("Elija al alumno:");
+        jPanel1.add(jLabel3);
+        jLabel3.setBounds(160, 60, 110, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,19 +135,17 @@ public class ContratarPlan extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_cmdSalirActionPerformed
     
-    private void txtBuscarRutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarRutActionPerformed
+    private void cmbIdPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbIdPlanesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtBuscarRutActionPerformed
+    }//GEN-LAST:event_cmbIdPlanesActionPerformed
 
-    private void txtNomAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomAlumnoActionPerformed
+    private void cmdConfirmarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConfirmarPlanActionPerformed
+        String rut = cmbRuts.getItemAt(cmbAlumnos.getSelectedIndex());
+        int id = Integer.parseInt(cmbIdPlanes.getItemAt(cmbPlanes.getSelectedIndex()));
+        ContratoPlan c = new ContratoPlan(rut,id,Date.valueOf(fecha),Date.valueOf(fecha.plusDays(31)),sql.getNumClases(id));
+        sql.guardar(c.getInsert());
 
-       
-    }//GEN-LAST:event_txtNomAlumnoActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        NuevoAlumno N_alum = new NuevoAlumno();
-        N_alum.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_cmdConfirmarPlanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,17 +183,16 @@ public class ContratarPlan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbAlumnos;
+    private javax.swing.JComboBox<String> cmbIdPlanes;
     private javax.swing.JComboBox<String> cmbPlanes;
+    private javax.swing.JComboBox<String> cmbRuts;
     private javax.swing.JButton cmdConfirmarPlan;
     private javax.swing.JButton cmdSalir;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblBuscarRut;
-    private javax.swing.JLabel lblBuscarRut2;
     private javax.swing.JLabel lblElegirPlan;
-    private javax.swing.JTextField txtBuscarRut;
-    private javax.swing.JTextField txtNomAlumno;
     // End of variables declaration//GEN-END:variables
 }

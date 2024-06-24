@@ -1,40 +1,16 @@
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import javax.swing.JOptionPane;
+
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+
 public class NuevoAlumno extends javax.swing.JFrame {
-    private Connection conex;
-    private Statement st;
     private SentenciasSQL sql;
-    private LocalDate fecha = LocalDate.now();
-    public NuevoAlumno(Connection conex,SentenciasSQL sql) {
-        this.conex = conex;
+
+    public NuevoAlumno(SentenciasSQL sql) {
         this.sql = sql;
-        //hola
         initComponents();
-        cmbPlanId.setVisible(false);
-        llenarCombo();
+
     }
     public NuevoAlumno(){}
     
-    public void llenarCombo(){
-        try{
-            st=conex.createStatement();
-            ResultSet lista = st.executeQuery("SELECT id, nombre FROM plan_mensual");
-        
-            while(lista.next()){
-                cmbPlan.addItem(lista.getString("nombre"));
-                cmbPlanId.addItem(lista.getString("id"));
-
-            }
-        }catch(SQLException ex){
-            JOptionPane.showMessageDialog(null, "select "+ex,"coneccion",3);
-        }
-    }//llenarCombo()
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,7 +30,6 @@ public class NuevoAlumno extends javax.swing.JFrame {
         lblDomAlumno = new javax.swing.JLabel();
         lblTelAlumno = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        lblElegirPlan = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtRut = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
@@ -62,8 +37,7 @@ public class NuevoAlumno extends javax.swing.JFrame {
         txtFono = new javax.swing.JTextField();
         scrollObs = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
-        cmbPlan = new javax.swing.JComboBox<>();
-        cmbPlanId = new javax.swing.JComboBox<>();
+        dateFechaNac = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -99,19 +73,11 @@ public class NuevoAlumno extends javax.swing.JFrame {
 
         jLabel3.setText("Ingrese fecha de nacimiento:");
 
-        lblElegirPlan.setText("Elija el plan que desea contratar: ");
-
         jLabel4.setText("Obervaciones:");
 
         txtObs.setColumns(20);
         txtObs.setRows(5);
         scrollObs.setViewportView(txtObs);
-
-        cmbPlanId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbPlanIdActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,18 +104,12 @@ public class NuevoAlumno extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(cmbPlanId, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(txtRut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txtFono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
-                        .addContainerGap(57, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblElegirPlan)
-                .addGap(18, 18, 18)
-                .addComponent(cmbPlan, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                            .addComponent(txtFono, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(dateFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(99, 99, 99)
                 .addComponent(cmdConfirmarAlumno)
@@ -181,25 +141,17 @@ public class NuevoAlumno extends javax.swing.JFrame {
                             .addComponent(lblTelAlumno)
                             .addComponent(txtFono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(cmbPlanId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(scrollObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblElegirPlan)
-                    .addComponent(cmbPlan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56)
+                                .addGap(11, 11, 11))))
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(SalirAlumno)
                     .addComponent(cmdConfirmarAlumno))
@@ -225,19 +177,12 @@ public class NuevoAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirAlumnoActionPerformed
 
     private void cmdConfirmarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConfirmarAlumnoActionPerformed
-        int plan_mensual_id = Integer.parseInt(cmbPlanId.getItemAt(cmbPlan.getSelectedIndex()));
-        Date fecha_nac = new Date((dateFechaNac.getDate().getTime()));
-        Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText(),plan_mensual_id);
-        sql.guardar(a.getInsert());
-        ContratoPlan c = new ContratoPlan(txtRut.getText(),Date.valueOf(fecha),Date.valueOf(fecha.plusDays(31)),sql.getNumClases(plan_mensual_id));
-        sql.guardar(c.getInsert());
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_cmdConfirmarAlumnoActionPerformed
 
-    private void cmbPlanIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPlanIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbPlanIdActionPerformed
+        Date fecha_nac = new Date((dateFechaNac.getDate().getTime()));
+        Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText());
+        sql.guardar(a.getInsert());
+        this.setVisible(false);
+    }//GEN-LAST:event_cmdConfirmarAlumnoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,16 +221,14 @@ public class NuevoAlumno extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton SalirAlumno;
-    private javax.swing.JComboBox<String> cmbPlan;
-    private javax.swing.JComboBox<String> cmbPlanId;
     private javax.swing.JButton cmdConfirmarAlumno;
+    private com.toedter.calendar.JDateChooser dateFechaNac;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblDomAlumno;
-    private javax.swing.JLabel lblElegirPlan;
     private javax.swing.JLabel lblNomAlumno;
     private javax.swing.JLabel lblRutIngre;
     private javax.swing.JLabel lblTelAlumno;
