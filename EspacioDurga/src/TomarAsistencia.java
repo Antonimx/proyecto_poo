@@ -60,6 +60,8 @@ public class TomarAsistencia extends javax.swing.JFrame {
             }
         });
 
+        txtRut.setText("12345678-9");
+        txtRut.setToolTipText("Formato 12345678-9");
         txtRut.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRutActionPerformed(evt);
@@ -149,6 +151,7 @@ public class TomarAsistencia extends javax.swing.JFrame {
         contrato = sql.conseguirContrato(txtRut.getText().strip(),contrato);
         contrato.tomarAsistencia();
         sql.update(contrato.getUpdate());
+        sql.actualizarBD();
         cmdTomarAsistencia.setEnabled(false); 
     }//GEN-LAST:event_cmdTomarAsistenciaActionPerformed
 

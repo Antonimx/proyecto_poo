@@ -65,7 +65,7 @@ public class ContratoPlan {
     
     public void tomarAsistencia(){
         if ((LocalDate.now()).isAfter(fin_mensualidad.toLocalDate())){ //Si se venció la mensualidad porque se paso de los dias 
-            JOptionPane.showMessageDialog(null,"El último día de mensualidad disponible fue el "+fin_mensualidad,"MENSUALIDAD VENCIDA",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"El último día de mensualidad disponible fue el "+fin_mensualidad+"\nNO PUEDE ENTRAR A CLASES","MENSUALIDAD VENCIDA",JOptionPane.WARNING_MESSAGE);
             this.is_active=false;
         }else{
             if(n_dias>0){

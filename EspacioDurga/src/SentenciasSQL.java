@@ -8,15 +8,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 public class SentenciasSQL {
     private Statement st;
     private Connection conex;
     
-    private static ArrayList<String> listaPlanes = new ArrayList<>();
-    private static ArrayList<String> listaIdPlanes = new ArrayList<>();
-    private static ArrayList<String> alumnos = new ArrayList<>() ;
-    private static ArrayList<String> rutAlumnos = new ArrayList<>();
+    private static DefaultComboBoxModel<String> planes = new DefaultComboBoxModel<>();
+    private static DefaultComboBoxModel<String> idPlanes = new DefaultComboBoxModel<>();
+    private static DefaultListModel<String> alumnos = new DefaultListModel<>();
+    private static DefaultComboBoxModel<String> rutAlumnos = new DefaultComboBoxModel<>();
+    private static DefaultListModel<String> activos = new DefaultListModel<>();
+    private static DefaultListModel<String> finalizados = new DefaultListModel<>();
+
 
 
     public SentenciasSQL(){}
@@ -41,23 +46,41 @@ public class SentenciasSQL {
 
     }
 
-    public ArrayList<String> getListaPlanes() {
-        return listaPlanes;
+    public static DefaultComboBoxModel<String> getPlanes() {
+        return planes;
     }
 
-    public ArrayList<String> getListaIdPlanes() {
-        return listaIdPlanes;
+    public static DefaultComboBoxModel<String> getIdPlanes() {
+        return idPlanes;
     }
 
-    public ArrayList<String> getAlumnos() {
+    public static DefaultListModel<String> getAlumnos() {
         return alumnos;
     }
 
-    public ArrayList<String> getRutAlumnos() {
+    public static DefaultComboBoxModel<String> getRutAlumnos() {
         return rutAlumnos;
     }
+
+    public DefaultListModel<String> getActivos() {
+        return activos;
+    }
+
+    public DefaultListModel<String> getFinalizados() {
+        return finalizados;
+    }
     
-    
+    public void actualizarBD(){
+        planes.removeAllElements();
+        idPlanes.removeAllElements();
+        alumnos.removeAllElements();
+        rutAlumnos.removeAllElements();
+        activos.removeAllElements();
+        finalizados.removeAllElements();
+        conseguirPlanes();
+        conseguirAlumnos();
+        conseguirContratos();
+    }
     
     public void guardar(String insert){
         try {
@@ -70,7 +93,16 @@ public class SentenciasSQL {
     public void update(String update){
         try {
             st.executeUpdate(update);
-            JOptionPane.showMessageDialog(null,"Asistencia tomada correctamente","ASISTENCIA",JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SentenciasSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void delete(String delete){
+        try {
+            st.executeUpdate(delete);
+            JOptionPane.showMessageDialog(null,"Plan borrado con éxito.","HISTORIAL PLANES CONTRATADOS",JOptionPane.INFORMATION_MESSAGE);
 
         } catch (SQLException ex) {
             Logger.getLogger(SentenciasSQL.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,8 +126,8 @@ public class SentenciasSQL {
             ResultSet lista = st.executeQuery("SELECT id, nombre FROM plan_mensual");
         
             while(lista.next()){
-                this.listaPlanes.add(lista.getString("nombre"));
-                this.listaIdPlanes.add(lista.getString("id"));
+                this.planes.addElement(lista.getString("nombre"));
+                this.idPlanes.addElement(lista.getString("id"));
 
             }
         }catch(SQLException ex){
@@ -108,8 +140,8 @@ public class SentenciasSQL {
             ResultSet lista = st.executeQuery("SELECT rut, nombre FROM alumno WHERE is_active = 1");
         
             while(lista.next()){
-                this.alumnos.add(lista.getString("rut")+" "+lista.getString("nombre"));
-                this.rutAlumnos.add(lista.getString("rut"));
+                this.alumnos.addElement(lista.getString("rut")+" "+lista.getString("nombre"));
+                this.rutAlumnos.addElement(lista.getString("rut"));
 
             }
         }catch(SQLException ex){
@@ -117,6 +149,21 @@ public class SentenciasSQL {
         }
     }//conseguirAlumnos()
     
+    public void conseguirContratos(){
+        try{
+            ResultSet lista = st.executeQuery("SELECT * FROM contrato_plan");
+        
+            while(lista.next()){
+                if (lista.getBoolean("is_active")){
+                    this.activos.addElement(lista.getString("id")+ " "+lista.getString("rut_alumno")+ " " +lista.getString("inicio_mensualidad"));
+                }else{
+                    this.finalizados.addElement(lista.getString("id")+ " "+lista.getString("rut_alumno")+ " " + lista.getString("inicio_mensualidad"));
+                }
+            }
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "select Contratos"+ex,"coneccion",3);
+        }
+    }
     public ContratoPlan conseguirContrato(String rut,ContratoPlan contrato){
         try {
             ResultSet rs = st.executeQuery("SELECT * FROM contrato_plan WHERE rut_alumno ='"+rut+"' AND is_active=1");
@@ -146,7 +193,23 @@ public class SentenciasSQL {
                 JOptionPane.showMessageDialog(null,"Alumno encontrado.","ALUMNO",JOptionPane.INFORMATION_MESSAGE);
             }
             else{
-                JOptionPane.showMessageDialog(null,"Alumno con ese RUT no encontrado.","ALUMNO",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Alumno con ese RUT no encontrado.","ALUMNO",JOptionPane.INFORMATION_MESSAGE);
+                sw = false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SentenciasSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return sw;
+    }
+    
+    public boolean validarContratoAlumno(String rut){
+        boolean sw = true; //si true == ya hay contrato else no hay contrato
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM contrato_plan WHERE rut_alumno ='"+rut+"' AND is_active=1");
+            if (rs.next()){
+                JOptionPane.showMessageDialog(null,"El Alumno ya tiene un contrato activo.","Contrato Plan",JOptionPane.ERROR_MESSAGE);
+
+            }else{
                 sw = false;
             }
         } catch (SQLException ex) {

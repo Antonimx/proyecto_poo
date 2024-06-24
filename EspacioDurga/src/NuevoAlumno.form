@@ -122,10 +122,7 @@
                           <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="scrollObs" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -203,6 +200,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtRut">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="12345678-9"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombre">
         </Component>

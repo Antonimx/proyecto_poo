@@ -75,6 +75,8 @@ public class NuevoAlumno extends javax.swing.JFrame {
 
         jLabel4.setText("Obervaciones:");
 
+        txtRut.setText("12345678-9");
+
         txtObs.setColumns(20);
         txtObs.setRows(5);
         scrollObs.setViewportView(txtObs);
@@ -147,9 +149,7 @@ public class NuevoAlumno extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(scrollObs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(11, 11, 11))))
+                            .addComponent(jLabel4)))
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -177,11 +177,13 @@ public class NuevoAlumno extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirAlumnoActionPerformed
 
     private void cmdConfirmarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConfirmarAlumnoActionPerformed
-
-        Date fecha_nac = new Date((dateFechaNac.getDate().getTime()));
-        Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText());
-        sql.guardar(a.getInsert());
-        this.setVisible(false);
+        if (sql.validarRut(txtRut.getText().strip())==false){
+            Date fecha_nac = new Date((dateFechaNac.getDate().getTime()));
+            Alumno a = new Alumno(txtRut.getText(),txtNombre.getText(),fecha_nac,txtDireccion.getText(),txtFono.getText(),txtObs.getText());
+            sql.guardar(a.getInsert());
+            sql.actualizarBD();
+            this.setVisible(false);   
+        }
     }//GEN-LAST:event_cmdConfirmarAlumnoActionPerformed
 
     /**

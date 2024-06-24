@@ -14,29 +14,17 @@ public class ContratarPlan extends javax.swing.JFrame {
         cmbIdPlanes.setVisible(false);
         cmbRuts.setVisible(false);
         llenarCombos();
-        llenarAlumnos();
     }
     public ContratarPlan(){}
    
     public void llenarCombos(){
-        for (String plan : sql.getListaPlanes()){
-            cmbPlanes.addItem(plan);
-        }
+        cmbPlanes.setModel(sql.getPlanes());
+        cmbIdPlanes.setModel(sql.getIdPlanes());
+        cmbRuts.setModel(sql.getRutAlumnos());
+        lstAlumnos.setModel(sql.getAlumnos());
         
-        for (String id : sql.getListaIdPlanes()){
-            cmbIdPlanes.addItem(id);
-        }
     }
-    public void llenarAlumnos(){
-        for (String alumno : sql.getAlumnos()) {
-            cmbAlumnos.addItem(alumno);
-        }
-        
-        
-        for (String rut : sql.getRutAlumnos()){
-            cmbRuts.addItem(rut);
-        }
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,8 +43,9 @@ public class ContratarPlan extends javax.swing.JFrame {
         cmbPlanes = new javax.swing.JComboBox<>();
         cmbIdPlanes = new javax.swing.JComboBox<>();
         cmbRuts = new javax.swing.JComboBox<>();
-        cmbAlumnos = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lstAlumnos = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -94,10 +83,10 @@ public class ContratarPlan extends javax.swing.JFrame {
 
         lblElegirPlan.setText("Elija el plan que desea contratar: ");
         jPanel1.add(lblElegirPlan);
-        lblElegirPlan.setBounds(160, 100, 172, 16);
+        lblElegirPlan.setBounds(160, 230, 172, 16);
 
         jPanel1.add(cmbPlanes);
-        cmbPlanes.setBounds(340, 100, 149, 22);
+        cmbPlanes.setBounds(340, 230, 149, 22);
 
         cmbIdPlanes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,17 +94,20 @@ public class ContratarPlan extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbIdPlanes);
-        cmbIdPlanes.setBounds(170, 160, 72, 22);
+        cmbIdPlanes.setBounds(160, 300, 72, 20);
 
         jPanel1.add(cmbRuts);
-        cmbRuts.setBounds(280, 160, 72, 22);
-
-        jPanel1.add(cmbAlumnos);
-        cmbAlumnos.setBounds(270, 60, 220, 22);
+        cmbRuts.setBounds(280, 300, 72, 22);
 
         jLabel3.setText("Elija al alumno:");
         jPanel1.add(jLabel3);
         jLabel3.setBounds(160, 60, 110, 16);
+
+        lstAlumnos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(lstAlumnos);
+
+        jPanel1.add(jScrollPane1);
+        jScrollPane1.setBounds(260, 60, 230, 130);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,7 +117,9 @@ public class ContratarPlan extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,10 +134,14 @@ public class ContratarPlan extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbIdPlanesActionPerformed
 
     private void cmdConfirmarPlanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConfirmarPlanActionPerformed
-        String rut = cmbRuts.getItemAt(cmbAlumnos.getSelectedIndex());
-        int id = Integer.parseInt(cmbIdPlanes.getItemAt(cmbPlanes.getSelectedIndex()));
-        ContratoPlan c = new ContratoPlan(rut,id,Date.valueOf(fecha),Date.valueOf(fecha.plusDays(31)),sql.getNumClases(id));
-        sql.guardar(c.getInsert());
+        String rut = cmbRuts.getItemAt(lstAlumnos.getSelectedIndex());
+        if(sql.validarContratoAlumno(rut)== false){
+            int id = Integer.parseInt(cmbIdPlanes.getItemAt(cmbPlanes.getSelectedIndex()));
+            ContratoPlan c = new ContratoPlan(rut,id,Date.valueOf(fecha),Date.valueOf(fecha.plusDays(31)),sql.getNumClases(id));
+            sql.guardar(c.getInsert());
+            sql.actualizarBD();
+        }
+        
 
     }//GEN-LAST:event_cmdConfirmarPlanActionPerformed
 
@@ -183,7 +181,6 @@ public class ContratarPlan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> cmbAlumnos;
     private javax.swing.JComboBox<String> cmbIdPlanes;
     private javax.swing.JComboBox<String> cmbPlanes;
     private javax.swing.JComboBox<String> cmbRuts;
@@ -193,6 +190,8 @@ public class ContratarPlan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblElegirPlan;
+    private javax.swing.JList<String> lstAlumnos;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,11 +4,10 @@ public class Interfaz extends javax.swing.JFrame {
     
     public Interfaz() {
         sql.conectar();
-        sql.conseguirPlanes();
-        sql.conseguirAlumnos();
+        sql.actualizarBD();
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,6 +86,11 @@ public class Interfaz extends javax.swing.JFrame {
         cmdAgregarAlumno.setBounds(430, 350, 120, 23);
 
         cmdVerPlanes.setText("Ver Historial de Planes contratados");
+        cmdVerPlanes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdVerPlanesActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmdVerPlanes);
         cmdVerPlanes.setBounds(40, 410, 240, 23);
 
@@ -124,6 +128,11 @@ public class Interfaz extends javax.swing.JFrame {
         NuevoAlumno N_alum = new NuevoAlumno(sql);
         N_alum.setVisible(true);
     }//GEN-LAST:event_cmdAgregarAlumnoActionPerformed
+
+    private void cmdVerPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdVerPlanesActionPerformed
+        HistorialPlanes h_planes = new HistorialPlanes(sql);
+        h_planes.setVisible(true);
+    }//GEN-LAST:event_cmdVerPlanesActionPerformed
 
     /**
      * @param args the command line arguments
