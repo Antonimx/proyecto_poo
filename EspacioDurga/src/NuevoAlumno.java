@@ -1,5 +1,6 @@
 
 import java.sql.Date;
+import java.awt.Color;
 
 public class NuevoAlumno extends javax.swing.JFrame {
     private SentenciasSQL sql;
@@ -75,6 +76,11 @@ public class NuevoAlumno extends javax.swing.JFrame {
         jLabel4.setText("Obervaciones:");
 
         txtRut.setText("12345678-9");
+        txtRut.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtRutFocusGained(evt);
+            }
+        });
 
         txtObs.setColumns(20);
         txtObs.setRows(5);
@@ -181,6 +187,10 @@ public class NuevoAlumno extends javax.swing.JFrame {
             this.setVisible(false);   
         }
     }//GEN-LAST:event_cmdConfirmarAlumnoActionPerformed
+
+    private void txtRutFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtRutFocusGained
+          txtRut.setForeground(Color.RED);
+    }//GEN-LAST:event_txtRutFocusGained
 
     /**
      * @param args the command line arguments

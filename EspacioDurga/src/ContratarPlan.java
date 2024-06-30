@@ -85,6 +85,19 @@ public class ContratarPlan extends javax.swing.JFrame {
         jPanel1.add(lblElegirPlan);
         lblElegirPlan.setBounds(160, 230, 172, 16);
 
+        cmbPlanes.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                cmbPlanesMouseDragged(evt);
+            }
+        });
+        cmbPlanes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cmbPlanesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cmbPlanesMouseExited(evt);
+            }
+        });
         jPanel1.add(cmbPlanes);
         cmbPlanes.setBounds(340, 230, 149, 22);
 
@@ -144,6 +157,18 @@ public class ContratarPlan extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_cmdConfirmarPlanActionPerformed
+
+    private void cmbPlanesMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPlanesMouseDragged
+        
+    }//GEN-LAST:event_cmbPlanesMouseDragged
+
+    private void cmbPlanesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPlanesMouseEntered
+        cmbIdPlanes.showPopup();
+    }//GEN-LAST:event_cmbPlanesMouseEntered
+
+    private void cmbPlanesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPlanesMouseExited
+        cmbIdPlanes.hidePopup();
+    }//GEN-LAST:event_cmbPlanesMouseExited
 
     /**
      * @param args the command line arguments
