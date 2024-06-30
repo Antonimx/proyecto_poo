@@ -98,6 +98,11 @@ public class ContratarPlan extends javax.swing.JFrame {
                 cmbPlanesMouseExited(evt);
             }
         });
+        cmbPlanes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPlanesActionPerformed(evt);
+            }
+        });
         jPanel1.add(cmbPlanes);
         cmbPlanes.setBounds(340, 230, 149, 22);
 
@@ -163,12 +168,16 @@ public class ContratarPlan extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbPlanesMouseDragged
 
     private void cmbPlanesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPlanesMouseEntered
-        cmbIdPlanes.showPopup();
+        cmbPlanes.showPopup();
     }//GEN-LAST:event_cmbPlanesMouseEntered
 
     private void cmbPlanesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbPlanesMouseExited
-        cmbIdPlanes.hidePopup();
+
     }//GEN-LAST:event_cmbPlanesMouseExited
+
+    private void cmbPlanesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPlanesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPlanesActionPerformed
 
     /**
      * @param args the command line arguments
