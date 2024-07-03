@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 public class HistorialPlanes extends javax.swing.JFrame {
 
     SentenciasSQL sql;
+    
     public HistorialPlanes(SentenciasSQL sql) {
         this.sql = sql;
         initComponents();
@@ -48,7 +49,6 @@ public class HistorialPlanes extends javax.swing.JFrame {
         cmdEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(600, 500));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Historial de contratos");
@@ -106,8 +106,8 @@ public class HistorialPlanes extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -135,10 +135,16 @@ public class HistorialPlanes extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmdEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdEliminarActionPerformed
-        int id = Integer.parseInt(lstFinalizados.getSelectedValue().substring(0,lstFinalizados.getSelectedValue().indexOf(" ")));
+        
+        if(lstFinalizados.getSelectedValue() == null){
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ningun plan", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            
+        }else{
+            int id = Integer.parseInt(lstFinalizados.getSelectedValue().substring(0,lstFinalizados.getSelectedValue().indexOf(" ")));
         sql.delete("DELETE FROM contrato_plan WHERE id="+id);
         this.setVisible(true);
         sql.actualizarBD();
+        }
     }//GEN-LAST:event_cmdEliminarActionPerformed
 
     private void cmdSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalirActionPerformed

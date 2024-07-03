@@ -117,15 +117,18 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_cmdAsistenciaActionPerformed
 
     private void cmdSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalirActionPerformed
-        int resp = JOptionPane.showConfirmDialog(
+        String[] opciones = {"Salir", "Cancelar"};
+        
+        int resp = JOptionPane.showOptionDialog(
                         null,
                         "¿Está seguro de que desea salir?",
                         "Advertencia",
                         JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opciones,
+                        opciones[1]
                 );
-
-                // Si el usuario selecciona "Sí", cierra la aplicación
                 if (resp == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
